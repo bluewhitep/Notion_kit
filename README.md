@@ -5,8 +5,7 @@
    * [Quicky start](#quicky-start)
       * [Object](#object)
 * [Functions](#functions)
-* [Tips:](#tips)
-      * [Database non-create properties](#database-non-create-properties)
+* [Tips](#tips)
 * [Requirements](#requirements)
 * [Reference](#reference)
 * [License](#license)
@@ -23,9 +22,14 @@ Is for easier use [notion-sdk-py](https://github.com/ramnes/notion-sdk-py).
 ---
 # Usage
 ## Install
-```bash
-pip install git+https://github.com/bluewhitep/notion_kit.git
-```
+- pypi
+    ```bash
+    pip install notion-kit
+    ```
+- Github
+    ```bash
+    pip install git+https://github.com/bluewhitep/notion_kit.git
+    ```
 - **Refer to the [./examples](./examples/) fold for details on usage**
 
 ## Quicky start
@@ -100,7 +104,7 @@ pip install git+https://github.com/bluewhitep/notion_kit.git
   - ⭕️ who am i: Get bot user data
 
 ---
-# Tips:
+# Tips
 ### Database non-create properties
 - ``status`` can't be updated, because notion api not support it.
   > By notion api document, ``title``, ``rich_text``, ``number``, ``select``, ``multi_select``, ``date``, ``people``, ``files``, ``checkbox``, ``url``, ``email``, ``phone_number``, ``formula``, ``relation``, ``rollup``, ``created_time``, ``created_by``, ``last_edited_time``, ``last_edited_by`` can be updated.
