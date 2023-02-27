@@ -34,6 +34,7 @@ setup(
     author=_author,
     author_email=_author_email,
     description=_description,
+    license='MIT',
     long_description=_long_description,
     long_description_content_type=_long_description_content_type,
     url=_url,
