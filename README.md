@@ -1,4 +1,4 @@
-# TOC
+# Table of Contents
 * [notion_kit](#notion_kit)
 * [Usage](#usage)
    * [Install](#install)
