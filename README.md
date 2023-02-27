@@ -1,3 +1,17 @@
+# TOC
+* [notion_kit](#notion_kit)
+* [Usage](#usage)
+   * [Install](#install)
+   * [Quicky start](#quicky-start)
+      * [Object](#object)
+* [Functions](#functions)
+* [Tips:](#tips)
+      * [Database non-create properties](#database-non-create-properties)
+* [Requirements](#requirements)
+* [Reference](#reference)
+* [License](#license)
+---
+
 # notion_kit
 Is for easier use [notion-sdk-py](https://github.com/ramnes/notion-sdk-py).
 
@@ -5,8 +19,6 @@ Is for easier use [notion-sdk-py](https://github.com/ramnes/notion-sdk-py).
 
 - In order to make it easier to use Notion API, a lot of functions that may not be used have been created. :)
 
----
-[TOC]
 
 ---
 # Usage
