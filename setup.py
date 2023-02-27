@@ -1,5 +1,4 @@
 from setuptools import setup
-from setuptools import find_packages
 
 def _get_description(filename):
     with open(filename, encoding='utf-8') as file:
@@ -10,8 +9,8 @@ def _requires_from_file(filename):
         return file.read().splitlines()
 
 _pkg_name = "notion_kit"
-_version = "1.0.1" # Change 1.0.0 => 1.0.1
-_packages=find_packages('notion_kit')
+_version = "1.0.2" # Change 1.0.1 => 1.0.2
+_packages=["notion_kit"]
 _install_requires=_requires_from_file("requirements.txt"),
 _author = "Jieqiang Zhang"
 _author_email = "bluewhite2389@gmail.com"
