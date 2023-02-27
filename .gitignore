@@ -156,3 +156,4 @@ notion/*
 .python-version
 .vscode/
 .vscode/*
+.DS_Store
