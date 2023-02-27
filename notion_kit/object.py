@@ -964,6 +964,13 @@ class Page(RequestInfo):
             property_list.append({"name":name, "item":item})
         return property_list
     
+    def property_name_list(self) ->list[str]:
+        property_dict = self.get_items()
+        property_list = []
+        for name, _ in property_dict.items():
+            property_list.append(name)
+        return property_list
+    
 #--------------------------[Database]---------------------#
 # FC: [Database] object
 @dataclass
