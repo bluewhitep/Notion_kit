@@ -46,7 +46,7 @@ class kit:
         cls.Page:Page = Page(cls.client, id=None)         
         cls.Database:Database = Database(cls.client, id=None)
         cls.User:User = User(cls.client, id=None)
-        cls.Block = Block(cls.client, id=None)
+        cls.Block:Block = Block(cls.client, id=None)
     
     @classmethod
     def Client(cls, token:str, log_level:int=logging.WARNING) ->Client:
@@ -60,15 +60,6 @@ class kit:
         cls.token = token
         cls.log_level = log_level
         cls.client = Client(auth=token, log_level=log_level)
-        
-        cls.method()
-        return  cls.client
-        
-    @classmethod
-    def Async_client(cls, token:str, log_level:int=logging.WARNING) ->AsyncClient:
-        cls.token = token
-        cls.log_level = log_level
-        cls.client = AsyncClient(auth=token, log_level=log_level)
         
         cls.method()
         return  cls.client
