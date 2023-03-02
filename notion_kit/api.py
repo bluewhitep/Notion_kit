@@ -45,13 +45,14 @@ class Page(BaseAPI):
         #     self.id = id
         #     self.properties = self.page_info['properties']
    
-    def create_in_database(self, parent_database_id:str,
-                                 title:object.RichText | None ,
-                                 properties_item_dict:dict[str,object.PropertyItem] | None = None,
-                                 icon:object.Icon | None = None,
-                                 cover:object.FileLink | None = None
-                                 # children:list[object.Block] | None = None
-                                 ) ->object.Page:
+    def create_in_database(self,
+                           parent_database_id:str,
+                           title:object.RichText | None ,
+                           properties_item_dict:dict[str,object.PropertyItem] | None = None,
+                           icon:object.Icon | None = None,
+                           cover:object.FileLink | None = None
+                           # children:list[object.Block] | None = None
+                           ) ->object.Page:
         """
         Create page in database
         
@@ -83,11 +84,13 @@ class Page(BaseAPI):
             kwargs['cover'] = cover.Dict
         return object.Page(**self.client.pages.create(**kwargs))
    
-    def create_in_page(self, parent_page_id, title:object.RichText | None = None,
-                                            icon:object.Icon | None = None,
-                                            cover:object.FileLink | None = None,
-                                            # children:list[object.Block] | None = None
-                                            ) ->object.Page:
+    def create_in_page(self, 
+                       parent_page_id, 
+                       title:object.RichText | None = None, 
+                       icon:object.Icon | None = None, 
+                       cover:object.FileLink | None = None, 
+                       # children:list[object.Block] | None = None 
+                       ) ->object.Page:
         """
         Create page in database
         

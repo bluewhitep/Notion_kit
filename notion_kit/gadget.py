@@ -665,8 +665,7 @@ class Gadget:
     PropertyType = PropertyType()
     # PropertyItem = PropertyItem()
     # Block = Block()
-    Dict = DictGadget()
-    
+    Dict = DictGadget()    
     #-----------------------[Database]-----------------------#
     # FC: [Update database property]
     @staticmethod
@@ -760,8 +759,7 @@ class Gadget:
             object.Database [option]
         """
         database_object.del_property(property_name)
-        return database_object
-    
+        return database_object    
     #-----------------------[Page]-----------------------#
     # FC: [Update page property item]
     @staticmethod
