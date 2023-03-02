@@ -30,12 +30,12 @@ from notion_kit.CONTENTS import (
                         NON_UPDATABLE_PROPERTIES_ITEMS,
                         )
 
-class Base_api:
+class BaseAPI:
     def __init__(self, client, id:str | None):
         self.id = id
         self.client = client
     
-class Page(Base_api):
+class Page(BaseAPI):
     def __init__(self, client, id:str | None):
         super().__init__(client, id)
         # if id is not None:
@@ -44,7 +44,7 @@ class Page(Base_api):
         #     self.title = self.page_info['name']
         #     self.id = id
         #     self.properties = self.page_info['properties']
-    
+   
     def create_in_database(self, parent_database_id:str,
                                  title:object.RichText | None ,
                                  properties_item_dict:dict[str,object.PropertyItem] | None = None,
@@ -144,7 +144,7 @@ class Page(Base_api):
         return object.Page(**self.client.pages.update(new_page_object.id, 
                                                       **new_page_object.Dict))
     
-class Database(Base_api):
+class Database(BaseAPI):
     def __init__(self, client, id:str | None):
         super().__init__(client, id)
         # if id is not None:
@@ -240,7 +240,7 @@ class Database(Base_api):
         return object.Database(**self.client.databases.update(new_database_object.id, 
                                                               **new_database_object.Dict))
     
-class User(Base_api):
+class User(BaseAPI):
     def __dict_to_object(self, user_dict:dict) ->object.User | object.Bot | None:
         """
         Convert dict to object
@@ -292,7 +292,7 @@ class User(Base_api):
         """
         return object.Bot(**self.client.users.me())
 
-class Block(Base_api):
+class Block(BaseAPI):
     def get_data(self, id:str) ->object.Block:
         """
         Get block data

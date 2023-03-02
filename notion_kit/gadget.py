@@ -24,7 +24,7 @@
 from pprint import pformat
 
 from notion_kit import object
-from notion_kit.dict_gadget import Dict_Gadget
+from notion_kit.dict_gadget import DictGadget
 
 class Debug:
     @staticmethod
@@ -665,7 +665,7 @@ class Gadget:
     PropertyType = PropertyType()
     # PropertyItem = PropertyItem()
     # Block = Block()
-    Dict = Dict_Gadget()
+    Dict = DictGadget()
     
     #-----------------------[Database]-----------------------#
     # FC: [Update database property]

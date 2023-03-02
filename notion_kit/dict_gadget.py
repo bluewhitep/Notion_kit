@@ -37,7 +37,7 @@ from .CONTENTS import (
     NON_CREATEABLE_PROPERTIES_TYPES,
     )
 
-class Property_gadget:
+class PropertyGadget:
     @staticmethod
     def is_exist(prop_dict:dict, target:list) ->bool:
         """
@@ -269,7 +269,7 @@ class Property_gadget:
         for _,items in property_dict.items():
             items['name'] = name
         return property_dict
-    
+
     ### Rename property name
     @staticmethod
     def rename_property(old_name:str, new_name:str) ->dict:
@@ -321,7 +321,7 @@ class Property_gadget:
         if 'style' in kwargs:
             new_text.update({'annotations':kwargs['style']})
         else:
-            new_text.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+            new_text.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         return {name: {'rich_text': [new_text]}}
 
     @staticmethod
@@ -385,7 +385,7 @@ class Property_gadget:
             text_dict:     (dict)      - Text dict
         """
         new_text_dict =  {'text': {'content': new_text}}
-        new_text_dict.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+        new_text_dict.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         
         for _, item in text_dict.items():
             item['rich_text'].append(new_text_dict)
@@ -407,7 +407,7 @@ class Property_gadget:
         Raises:
             Exception:     (Exception) - dict is not page or database
         """
-        type = Dict_Gadget.check_dict_type(dict)
+        type = DictGadget.check_dict_type(dict)
         if type == 'none':
             raise Exception('dict is not page or database')
         
@@ -416,13 +416,13 @@ class Property_gadget:
         if type == 'page':
             metion_dict.update({'mention': {'page': {'id': dict['id']},
                                             'type': 'page'},
-                                'plain_text': Page_gadget.get_title(dict)})
+                                'plain_text': PageGadget.get_title(dict)})
         elif type == 'database':
             metion_dict.update({'mention': {'database': {'id': dict['id']},
                                             'type': 'database'},
-                                'plain_text': Database_gadget.get_title(dict)})
+                                'plain_text': DatabaseGadget.get_title(dict)})
         
-        metion_dict.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+        metion_dict.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         for _, item in text_dict.items():
             item['rich_text'].append(metion_dict)
         return text_dict
@@ -448,7 +448,7 @@ class Property_gadget:
                           'text':{'content': text,
                                   'link': {'url': link}},
                           'type': 'text'}
-        hyperlink_dict.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+        hyperlink_dict.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         for _, item in text_dict.items():
             item['rich_text'].append(hyperlink_dict)
         return text_dict
@@ -840,7 +840,7 @@ class Property_gadget:
         Raise:
             Exception:                  (Exception) - Parameter error
         """
-        if not Dict_Gadget.check_rollup_function(function):
+        if not DictGadget.check_rollup_function(function):
             raise Exception(f"{sys._getframe().f_code.co_name}: " +
                              "Parameter error, please check the parameter. " +
                             f"'function' is not in ROLLUP_FUNCTION_LIST. \n" +
@@ -907,7 +907,7 @@ class Property_gadget:
             ids.append({'id': id})
         return {name: {'relation': ids}}
     
-class Page_gadget:
+class PageGadget:
     @staticmethod
     def get_id(page_dict:dict) ->str:
         """
@@ -969,7 +969,7 @@ class Page_gadget:
                             "Parameter error, please check the parameter. " +
                             "'page_dict' is not form Client.pages.retrieve()")
             
-        page_info = {'name': Page_gadget.get_title(page_dict=page_dict),
+        page_info = {'name': PageGadget.get_title(page_dict=page_dict),
                     'id': page_dict['id'],
                     'properties': page_dict['properties']}
         return page_info
@@ -991,7 +991,7 @@ class Page_gadget:
             raise Exception(f"{sys._getframe().f_code.co_name}: " +
                             "page dict not include 'property'")
     
-class Database_gadget:
+class DatabaseGadget:
     @staticmethod
     def get_id(database_dict:dict) ->str:
         """
@@ -1050,7 +1050,7 @@ class Database_gadget:
                             "'database_page_dict' is not form Client.databases.query()")
         page_list = []
         for page in pages_list:
-            page_list.append({'name': Page_gadget.get_title(page),
+            page_list.append({'name': PageGadget.get_title(page),
                               'id':page['id']})
         return page_list
     
@@ -1086,7 +1086,7 @@ class Database_gadget:
             
         return properties_dict
                     
-class Block_gadget:
+class BlockGadget:
     @staticmethod
     def get_block_ids_and_type(block_dict:dict) ->list:
         """
@@ -1143,7 +1143,7 @@ class Block_gadget:
         Returns:
             block_dict:         (dict)      - Target block dict
         """
-        if not Dict_Gadget.check_block_type(type):
+        if not DictGadget.check_block_type(type):
             raise Exception(f"{sys._getframe().f_code.co_name}: " +
                             "Parameter error, please check the parameter. " +
                             "'type' is not in BLOCK_TYPE_LIST. \n" +
@@ -1182,7 +1182,7 @@ class Block_gadget:
         if 'style' in kwargs:
             paragraph_text.update({'annotations':kwargs['style']})
         else:
-            paragraph_text.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+            paragraph_text.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         
         paragraph_block = {'type': type,
                            type:{'rich_text': [paragraph_text]},
@@ -1219,7 +1219,7 @@ class Block_gadget:
         if 'style' in kwargs:
             title_text.update({'annotations':kwargs['style']})
         else:
-            title_text.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+            title_text.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         heading_block = {'type': type,
                         type:{'rich_text': [title_text],
                               'is_toggleable': is_toggleable,
@@ -1246,7 +1246,7 @@ class Block_gadget:
         if 'style' in kwargs:
             callout_text.update({'annotations':kwargs['style']})
         else:
-            callout_text.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+            callout_text.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         
         callout_block = {'type': type,
                          type: {
@@ -1272,7 +1272,7 @@ class Block_gadget:
         Raises:
             Exception:          (Exception)  - Parameter error
         """
-        if not Dict_Gadget.check_text_color(color):
+        if not DictGadget.check_text_color(color):
             raise Exception(f"{sys._getframe().f_code.co_name}: " +
                             "Parameter error, please check the parameter. " +
                             "'color' is not in TEXT_COLOR_LIST. \n" +
@@ -1283,7 +1283,7 @@ class Block_gadget:
         if 'style' in kwargs:
             quote_text.update({'annotations':kwargs['style']})
         else:
-            quote_text.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+            quote_text.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         
         quote_block = {'type': type,
                        type: {
@@ -1317,7 +1317,7 @@ class Block_gadget:
         Raises:
             Exception:                (Exception) - Parameter error
         """
-        if not Dict_Gadget.check_text_color(color):
+        if not DictGadget.check_text_color(color):
             raise Exception(f"{sys._getframe().f_code.co_name}: " +
                             "Parameter error, please check the parameter. " +
                             "'color' is not in TEXT_COLOR_LIST. \n" +
@@ -1328,7 +1328,7 @@ class Block_gadget:
         if 'style' in kwargs:
             bulleted_list_text.update({'annotations':kwargs['style']})
         else:
-            bulleted_list_text.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+            bulleted_list_text.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         
         bulleted_list_block = {'type': type,
                                 type: {
@@ -1363,7 +1363,7 @@ class Block_gadget:
         Raises:
             Exception:               (Exception) - Parameter error
         """
-        if not Dict_Gadget.check_text_color(color):
+        if not DictGadget.check_text_color(color):
             raise Exception(f"{sys._getframe().f_code.co_name}: " +
                             "Parameter error, please check the parameter. " +
                             "'color' is not in TEXT_COLOR_LIST. \n" +
@@ -1374,7 +1374,7 @@ class Block_gadget:
         if 'style' in kwargs:
             numbered_list_text.update({'annotations':kwargs['style']})
         else:
-            numbered_list_text.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+            numbered_list_text.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         
         numbered_list_block = {'type': type,
                                 type: {
@@ -1407,7 +1407,7 @@ class Block_gadget:
         Returns:
             to_do_list_block:       (dict)      - Target block dict
         """
-        if not Dict_Gadget.check_text_color(color):
+        if not DictGadget.check_text_color(color):
             raise Exception(f"{sys._getframe().f_code.co_name}: " +
                             "Parameter error, please check the parameter. " +
                             "'color' is not in TEXT_COLOR_LIST. \n" +
@@ -1418,7 +1418,7 @@ class Block_gadget:
         if 'style' in kwargs:
             to_do_list_text.update({'annotations':kwargs['style']})
         else:
-            to_do_list_text.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+            to_do_list_text.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         
         to_do_list_block = {'type': type,
                             type: {
@@ -1451,7 +1451,7 @@ class Block_gadget:
         Returns:
             toggle_list_block:      (dict)      - Target block dict
         """
-        if not Dict_Gadget.check_text_color(color):
+        if not DictGadget.check_text_color(color):
             raise Exception(f"{sys._getframe().f_code.co_name}: " +
                             "Parameter error, please check the parameter. " +
                             "'color' is not in TEXT_COLOR_LIST. \n" +
@@ -1462,7 +1462,7 @@ class Block_gadget:
         if 'style' in kwargs:
             toggle_list_text.update({'annotations':kwargs['style']})
         else:
-            toggle_list_text.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+            toggle_list_text.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
         
         toggle_list_block = {'type': type,
                             type: {
@@ -1494,7 +1494,7 @@ class Block_gadget:
         Returns:
             code_page_block:        (dict)      - Target block dict
         """
-        if not Dict_Gadget.check_code_language(language):
+        if not DictGadget.check_code_language(language):
             raise Exception(f"{sys._getframe().f_code.co_name}: " +
                             "Parameter error, please check the parameter. " +
                             "'language' is not in CODE_LANGUAGE_LIST. \n" +
@@ -1594,7 +1594,7 @@ class Block_gadget:
         Raises:
             Exception:              (Exception) - Parameter error
         """
-        if not Dict_Gadget.check_media_type(type):
+        if not DictGadget.check_media_type(type):
             raise Exception(f"{sys._getframe().f_code.co_name}: " +
                             "Parameter error, please check the parameter. " +
                             "'type' is not in MEDIA_TYPE_LIST. \n" +
@@ -1685,7 +1685,7 @@ class Block_gadget:
         Raises:
             Exception:              (Exception) - Parameter error
         """
-        if not Dict_Gadget.check_text_color(color):
+        if not DictGadget.check_text_color(color):
             raise Exception(f"{sys._getframe().f_code.co_name}: " +
                             "Parameter error, please check the parameter. " +
                             "'color' is not in COLOR_LIST. \n" +
@@ -1786,7 +1786,7 @@ class Block_gadget:
         if 'style' in kwargs:
             template_title_text.update({'annotations':kwargs['style']})
         else:
-            template_title_text.update({'annotations':Property_gadget.set_text_style(**kwargs)})
+            template_title_text.update({'annotations':PropertyGadget.set_text_style(**kwargs)})
             
         template_block = {'type': type,
                           type:{'rich_text': [template_title_text]},
@@ -1879,11 +1879,11 @@ class Block_gadget:
                             }
         return synced_from_block
 
-class Dict_Gadget:
-    Property = Property_gadget()
-    Page = Page_gadget()
-    Database = Database_gadget()
-    Block = Block_gadget()
+class DictGadget:
+    Property = PropertyGadget()
+    Page = PageGadget()
+    Database = DatabaseGadget()
+    Block = BlockGadget()
     
     #--------------------------[Object]--------------------------#
     # FC [Gadget]: Get Icon object

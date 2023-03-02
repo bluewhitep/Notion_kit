@@ -23,13 +23,13 @@
 ####################################################################################
 import logging
 
-from notion_client import Client, AsyncClient
+from notion_client import Client
 from notion_client.helpers import get_id
 
 from .gadget import Gadget
 from .api import Page, Database, User, Block
     
-class kit:
+class Kit:
     @staticmethod
     def get_id(url:str) ->str:
         """
