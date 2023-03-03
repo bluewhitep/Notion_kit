@@ -26,6 +26,8 @@ from pprint import pformat
 from notion_kit import object
 from notion_kit.dict_gadget import DictGadget
 
+from typing import Any
+
 class Debug:
     @staticmethod
     def fill_line(str_list:list, max_line:int, width:int=0) ->None:
@@ -652,7 +654,28 @@ class PropertyType:
     
 class PropertyItem:
     #-----------------------[Property Item]-----------------------#
-    pass
+    # FC: [Rich Text]
+    @staticmethod
+    def rich_text(name:str, **kwargs)->dict[str: list[object.RichText]]:
+        """
+        Get rich text property type
+        
+        Parameter
+            name:       (str)       - Property name \n
+            kwargs:     (dict)      - Following keyword arguments are supported:
+                text:               (str)       - text
+                link:               (str)       - link
+                bold:               (bool)      - bold
+                italic:             (bool)      - italic
+                strikethrough:      (bool)      - strikethrough
+                underline:          (bool)      - underline
+                code:               (bool)      - code
+                color:              (str)       - color
+            
+        Return
+            object.PropertyType
+        """
+        return {name:[Object.get_rich_text(**kwargs)]}
 
 class Block:
     #-----------------------[Block]-----------------------#
