@@ -9,7 +9,7 @@ def _requires_from_file(filename):
         return file.read().splitlines()
 
 _pkg_name = "notion_kit"
-_version = "1.1.0" # Change 1.0.2 => 1.1.0
+_version = "1.1.1" # Change 1.1.0 => 1.1.1
 _packages=["notion_kit"]
 _install_requires=_requires_from_file("requirements.txt"),
 _author = "Jieqiang Zhang"

@@ -901,6 +901,20 @@ class PropertyItem(BaseMethod):
     def get_value(self):
         return self.Dict[self.type]
 
+    def add_rich_text(self, rich_text: RichText) -> None:
+        if self.type == 'rich_text':
+            self.rich_text.append(rich_text)
+            self.update()
+        else:
+            ValueError('This property is not rich_text')
+    
+    def remove_rich_text(self, index:int) -> None:
+        if self.type == 'rich_text':
+            self.rich_text.pop(index)
+            self.update()
+        else:
+            ValueError('This property is not rich_text')
+    
 #--------------------------[Page]---------------------#
 # FC: [Page] object
 @dataclass

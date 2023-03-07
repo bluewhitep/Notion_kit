@@ -679,6 +679,35 @@ class PropertyItem:
 
 class Block:
     #-----------------------[Block]-----------------------#
+    # FC: [Paragraph]
+    @staticmethod
+    def get_paragraph(rich_text_object:object.RichText | None = None,
+                      **kwargs)->object.Block:
+        """
+        Get paragraph property type
+        
+        Parameter
+            rich_text_object:       (object.RichText)       - Rich text object\n
+            kwargs:                 (dict)                  - Following keyword arguments are supported:
+                text:               (str)       - text
+                link:               (str)       - link
+                bold:               (bool)      - bold
+                italic:             (bool)      - italic
+                strikethrough:      (bool)      - strikethrough
+                underline:          (bool)      - underline
+                code:               (bool)      - code
+                color:              (str)       - color
+            
+        Return
+            object.Block
+        """
+        if rich_text_object is not None:
+            paragraph=object.Paragraph(rich_text=[rich_text_object])
+        else:
+            paragraph=object.Paragraph(rich_text=[Object.get_rich_text(**kwargs)])
+        return object.Block(type="paragraph",
+                            paragraph=paragraph)
+        
     # FUNTURE: [Get block tree]
     pass
 
@@ -788,7 +817,7 @@ class Gadget:
     @staticmethod
     def update_page_property(page_object:object.Page,
                              property_name:str,
-                             **kwargs) ->object.Page:
+                             new_value) ->object.Page:
         """
         Update page property
         
@@ -800,9 +829,11 @@ class Gadget:
         Return
             object.Page [option]
         """
-        new_property = object.PropertyItem(id=page_object.properties[property_name].id,
-                                           type=page_object.properties[property_name].type,
-                                           **kwargs)
+        property_id = page_object.properties[property_name].id
+        property_type = page_object.properties[property_name].type
+        new_property = object.PropertyItem(id=property_id,
+                                           type=property_type,
+                                           **{property_type: new_value})
         page_object.properties[property_name] = new_property
         page_object.update()
         return page_object

@@ -2,7 +2,7 @@
 import os
 from pprint import pprint
 
-from notion_kit import kit as nkit
+from notion_kit import Kit as nkit
 
 # %%
 token = os.environ["NOTION_TOKEN"]

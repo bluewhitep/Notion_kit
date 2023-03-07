@@ -2,7 +2,7 @@
 import os
 from pprint import pprint
 
-from notion_kit.tool import kit as nkit
+from notion_kit.tool import Kit as nkit
 from notion_kit import object as  nobj
 
 # %%
