@@ -23,7 +23,10 @@
 ####################################################################################
 from pprint import pformat
 
-from notion_kit import object
+from notion_kit import object_old as object
+
+from notion_kit.object import property_item
+from notion_kit.object import property_type
 from notion_kit.dict_gadget import DictGadget
 
 from typing import Any
@@ -114,7 +117,7 @@ class Object:
     #-----------------------[Get object]-----------------------#
     # FC: [Date]
     @staticmethod
-    def get_date(start:str, end:str | None = None) ->object.Date:
+    def get_date(start:str, end:str | None = None) ->property_item.Date:
         """
         Get date
         
@@ -144,7 +147,7 @@ class Object:
     
     # FC: [File Upload]
     @staticmethod
-    def get_file_upload(name:str, url:str, expiry_time:str) ->object.FileUpload:
+    def get_file_upload(name:str, url:str, expiry_time:str) ->pitem.FileUpload:
         """
         Get file upload
         
@@ -200,7 +203,7 @@ class Object:
         
     # FC: [Option]
     @staticmethod
-    def get_option(name:str, color:str="default") ->object.Option:
+    def get_option(name:str, color:str="default") ->pitem.Option:
         """
         Get option
         

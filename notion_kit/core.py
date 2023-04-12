@@ -26,9 +26,9 @@ import logging
 from notion_client import Client
 from notion_client.helpers import get_id
 
-from .gadget import Gadget
+# from .gadget import Gadget
 from .api import Page, Database, User, Block
-    
+
 class Kit:
     @staticmethod
     def get_id(url:str) ->str:
@@ -42,7 +42,7 @@ class Kit:
     
     @classmethod
     def method(cls) -> None:
-        cls.Gadget:Gadget = Gadget()
+        # cls.Gadget:Gadget = Gadget()
         cls.Page:Page = Page(cls.client, id=None)         
         cls.Database:Database = Database(cls.client, id=None)
         cls.User:User = User(cls.client, id=None)

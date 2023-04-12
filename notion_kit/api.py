@@ -21,9 +21,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 ####################################################################################
-from pprint import pprint
+from notion_kit import object 
+from notion_kit.object import property_item 
+from notion_kit.object import property_type
 
-from notion_kit import object
 from notion_kit.CONTENTS import (
                         NON_CREATEABLE_PROPERTIES_TYPES,
                         NON_UPDATABLE_PROPERTIES_TYPES,
@@ -34,41 +35,39 @@ class BaseAPI:
     def __init__(self, client, id:str | None):
         self.id = id
         self.client = client
-    
+
 class Page(BaseAPI):
     def __init__(self, client, id:str | None):
         super().__init__(client, id)
-        # if id is not None:
-        #     self.page_dict = self.get_data(id)
-        #     self.page_info = self.gadget.get_info(self.page_dict)
-        #     self.title = self.page_info['name']
-        #     self.id = id
-        #     self.properties = self.page_info['properties']
    
     def create_in_database(self,
                            parent_database_id:str,
-                           title:object.RichText | None ,
+                           title:str | property_item.RichText | None,
                            properties_item_dict:dict[str,object.PropertyItem] | None = None,
-                           icon:object.Icon | None = None,
-                           cover:object.FileLink | None = None
-                           # children:list[object.Block] | None = None
+                           icon:str | property_item.Icon | None = None,
+                           cover:str | property_item.Url | None = None
+                           #children:list[property_item.Block] | None = None
                            ) ->object.Page:
         """
         Create page in database
         
         Parameters:
-            parent_database_id:        (str)                    - Target database id
-            title:                     (object.RichText)        - New page title
-            icon:                      (object.Icon)            - New page icon [Optional]
-            cover:                     (object.FileLink)        - New page cover [Optional]
-            children:                  (list[object.Block])     - New page children [unavailable]
+            parent_database_id:        (str)                           - Target database id
+            title:                     (property_item.RichText)        - New page title
+            properties_item_dict       (dict[str,object.PropertyItem]) - 
+            icon:                      (property_item.Icon)            - New page icon [Optional]
+            cover:                     (property_item.FileLink)        - New page cover [Optional]
+            children:                  (list[property_item.Block])     - New page children [unavailable]
             
         Returns:
-            object.Page:               (object.Page)            - New page
+            object.Page:               (object.Page)                   - New page
         """
+        if type(title)==str:
+            title = property_item.RichText(text=title)
+
         kwargs = {
-            'parent': object.Parent(type="database_id", database_id=parent_database_id).Dict,  # type: ignore
-            'properties': {"Name": {"title": [title.Dict]}}                      # type: ignore
+            'parent': property_item.Parent(type="database_id", database_id=parent_database_id).Dict,
+            'properties': {"Name": {"title": [title.Dict]}}
             }
         
         if properties_item_dict is not None:
@@ -86,9 +85,9 @@ class Page(BaseAPI):
    
     def create_in_page(self, 
                        parent_page_id, 
-                       title:object.RichText | None = None, 
-                       icon:object.Icon | None = None, 
-                       cover:object.FileLink | None = None, 
+                       title:property_item.RichText | None = None, 
+                       icon:property_item.Icon | None = None, 
+                       cover:property_item.FileLink | None = None, 
                        # children:list[object.Block] | None = None 
                        ) ->object.Page:
         """
@@ -96,16 +95,16 @@ class Page(BaseAPI):
         
         Parameters:
             parent_page_id:            (str)                    - Target database id
-            title:                     (object.RichText)        - New page title
-            icon:                      (object.Icon)            - New page icon [Optional]
-            cover:                     (object.FileLink)        - New page cover [Optional]
+            title:                     (property_item.RichText)        - New page title
+            icon:                      (property_item.Icon)            - New page icon [Optional]
+            cover:                     (property_item.FileLink)        - New page cover [Optional]
             children:                  (list[object.Block])     - New page children [unavailable]
             
         Returns:
             object.Page:               (object.Page)            - New page
         """
         kwargs = {
-            'parent': object.Parent(type="page_id", page_id=parent_page_id).Dict, # type: ignore
+            'parent': property_item.Parent(type="page_id", page_id=parent_page_id).Dict, # type: ignore
             'properties': {"title": [title.Dict]}, # type: ignore
             }
         if icon is not None:
@@ -150,28 +149,22 @@ class Page(BaseAPI):
 class Database(BaseAPI):
     def __init__(self, client, id:str | None):
         super().__init__(client, id)
-        # if id is not None:
-        #     self.database_dict = self.get_data(id)
-        #     self.page_dict = self.get_pages(id)
-        #     self.properties_list = Database_gadget.get_properties_options_dict(self.database_dict)
-        #     self.pages_list = Database_gadget.get_pages_list(self.page_dict)
-        #     self.id = id
-        #     self.title = self.database_dict['title'][0]['plain_text']
-
-    def create(self, parent_page_id:str, title:object.RichText,
-                                         properties_type_list:list[object.PropertyType] | None = None,
-                                         icon:object.Icon | None = None,
-                                         cover:object.FileLink | None = None,
-                                         is_inline:bool = False) ->object.Database:
+        
+    def create(self, parent_page_id:str, 
+                title:property_item.RichText,
+                properties_type_list:list[object.PropertyType] | None = None,
+                icon:property_item.Icon | None = None,
+                cover:property_item.FileLink | None = None,
+                is_inline:bool = False) ->object.Database:
         """
         Create database
     
         Parameters:
             parent_page_id:            (str)                       - Target database id
-            title:                     (object.RichText)           - New database title
+            title:                     (property_item.RichText)           - New database title
             properties_type:           (object.PropertyType)       - New database properties type [Optional]
-            icon:                      (object.Icon)               - New database icon [Optional]
-            cover:                     (object.FileLink)           - New database cover [Optional]
+            icon:                      (property_item.Icon)               - New database icon [Optional]
+            cover:                     (property_item.FileLink)           - New database cover [Optional]
             is_inline:                 (bool)                      - New database inline [Optional]
                 
         Return:
@@ -179,7 +172,7 @@ class Database(BaseAPI):
         """
         
         kwargs = {
-            'parent': object.Parent(page_id=parent_page_id, type='page_id').asdict(),
+            'parent': property_item.Parent(page_id=parent_page_id, type='page_id').asdict(),
             'title': [title.Dict],
             'properties': {"Name": {"title": {}}}
         }
@@ -252,14 +245,14 @@ class User(BaseAPI):
             user_dict:      (dict)                      - User dict
             
         Returns:
-            user_object:    (object.User | object.Bot)  - User object
+            user_object:    (object_class.User | object_class.Bot)  - User object
         """
         if user_dict['type'] == 'person':
             return object.User(**user_dict)
         elif user_dict['type'] == 'bot':
             return object.Bot(**user_dict)
         return None
-    
+
     def get_user_list(self) ->list[object.User | object.Bot]:
         """
         Get user list
@@ -280,9 +273,8 @@ class User(BaseAPI):
             user_id:        (str)                               - Target user id
 
         Returns:
-            user_data:      (object.User | object.Bot | None)   - User data [None if user not found]
+            user_data:      (object_class.User | object_class.Bot | None)   - User data [None if user not found]
         """
-        print(self.client.users.retrieve(user_id=user_id))
         return  self.__dict_to_object(self.client.users.retrieve(user_id=user_id))
     
     def who_am_i(self) ->object.Bot:
@@ -291,7 +283,7 @@ class User(BaseAPI):
         Who am I?
 
         Returns:
-            object.Bot:     (object.Bot)    - Api user
+            object_class.Bot:     (object_class.Bot)    - Api user
         """
         return object.Bot(**self.client.users.me())
 
@@ -304,7 +296,7 @@ class Block(BaseAPI):
             block_id:           (str)                   - Target block id or page id
             
         Returns:
-            object.BlockBase:   (object.BlockBase)      - Block data
+            object.Block:       (object.Block)          - Block data
         """
         return object.Block(**self.client.blocks.retrieve(block_id=id))
     
@@ -316,7 +308,7 @@ class Block(BaseAPI):
             block_id:           (str)                   - Target block id or page id
         
         Returns:
-            object.BlockList:   (object.BlockList)      - Block childrens
+            property_item.BlockList:   (property_item.BlockList)      - Block childrens
         """
         return object.BlockList(**self.client.blocks.children.list(block_id=id))
     
